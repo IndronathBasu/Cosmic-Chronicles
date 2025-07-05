@@ -35,7 +35,7 @@ astro-events-app
 
 1. **Clone the repository**:
    ```
-   git clone <repository-url>
+   git clone https://github.com/IndronathBasu/Cosmic-Chronicles.git
    cd astro-events-app
    ```
 
