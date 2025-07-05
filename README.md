@@ -147,10 +147,6 @@ Planned features for future releases:
 - Educational quizzes about astronomy
 - Dark/light theme toggle
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Team
 
 This project is Created By Team Lunar Logic, SRM(Ktr)
