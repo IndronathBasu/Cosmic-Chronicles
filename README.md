@@ -65,6 +65,6 @@ This project is Created By Team Lunar logic, SRM(Ktr)
 
 Team Members:-
 
-Indronath Basu
-Lasya Srivastava 
-Suhani guleria
+Indronath Basu.
+Lasya Srivastava.
+Suhani guleria.
