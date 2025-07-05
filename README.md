@@ -57,7 +57,6 @@ astro-events-app
 - **Axios**: For API requests to NASA's APOD API
 - **date-fns**: For date formatting and manipulation
 - **Botpress**: For chatbot integration
-- **OpenAI API**: For the custom Astrobot assistant (optional)
 
 ## Setup
 
