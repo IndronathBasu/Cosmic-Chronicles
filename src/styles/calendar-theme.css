@@ -1,0 +1,318 @@
+/* Custom Calendar Theme for Astro Events App */
+
+/* Calendar Container */
+.cosmic-calendar {
+  position: fixed; /* Fixed positioning for overlay effect */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center the calendar */
+  width: 320px;
+  max-width: 90vw; /* Prevent overflow on small screens */
+  background: linear-gradient(135deg, rgba(10, 10, 41, 0.9), rgba(3, 0, 20, 0.95));
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(77, 171, 247, 0.4);
+  border: 1px solid rgba(77, 171, 247, 0.3);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem;
+  z-index: 9999; /* Very high z-index to ensure it appears above everything */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-origin: center; /* Changed to center */
+  overflow: hidden;
+}
+
+.cosmic-calendar.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(77, 171, 247, 0.5); /* Enhanced shadow effect */
+}
+
+/* Responsive adjustments for iPad */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .cosmic-calendar {
+    width: 380px;
+    padding: 1.8rem;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  
+  .cosmic-calendar.visible {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  /* Improve touch targets for iPad */
+  .calendar-day {
+    height: 40px;
+    width: 40px;
+    font-size: 1.1rem;
+  }
+  
+  .calendar-nav-button {
+    padding: 0.7rem;
+    font-size: 1.2rem;
+  }
+  
+  .month-year {
+    font-size: 1.3rem;
+  }
+  
+  /* iPad landscape orientation adjustments */
+  @media (orientation: landscape) {
+    .cosmic-calendar {
+      width: 420px;
+    }
+    
+    .calendar-day {
+      height: 45px;
+      width: 45px;
+    }
+  }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 480px) {
+  .cosmic-calendar {
+    padding: 1rem;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .cosmic-calendar.visible {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+}
+
+
+/* Calendar Header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.month-year {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-shadow: 0 0 10px rgba(77, 171, 247, 0.6);
+  letter-spacing: 0.5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.month-year::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--accent-color), transparent);
+  border-radius: 2px;
+}
+
+.month-year-selector {
+  position: relative;
+  cursor: pointer;
+}
+
+.month-year-selector::after {
+  content: '▼';
+  font-size: 0.7rem;
+  margin-left: 5px;
+  color: var(--accent-color);
+  vertical-align: middle;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.nav-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn:hover {
+  background: rgba(77, 171, 247, 0.2);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(77, 171, 247, 0.5);
+  transform: scale(1.1);
+}
+
+/* Calendar Grid */
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.weekday {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  text-shadow: 0 0 8px rgba(77, 171, 247, 0.4);
+  padding: 0.5rem 0;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.day {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+  color: var(--text-color);
+  background: transparent;
+  z-index: 1;
+}
+
+.day:hover:not(.empty):not(.selected) {
+  background: rgba(77, 171, 247, 0.15);
+  box-shadow: 0 0 15px rgba(77, 171, 247, 0.3);
+  transform: scale(1.1);
+}
+
+.day.today {
+  font-weight: 700;
+  border: 1px solid var(--accent-color);
+  box-shadow: 0 0 10px rgba(77, 171, 247, 0.5);
+}
+
+.day.selected {
+  background: var(--accent-color);
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(77, 171, 247, 0.7);
+  transform: scale(1.1);
+}
+
+.day.empty {
+  cursor: default;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Calendar Footer */
+.calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calendar-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.calendar-btn:hover {
+  background: rgba(77, 171, 247, 0.2);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(77, 171, 247, 0.4);
+  transform: translateY(-2px);
+}
+
+.calendar-btn.today-btn {
+  background: rgba(77, 171, 247, 0.2);
+  border-color: var(--accent-color);
+}
+
+/* Cosmic Effects */
+.cosmic-calendar::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(77, 171, 247, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(20px);
+  animation: float 15s infinite alternate ease-in-out;
+}
+
+.cosmic-calendar::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(252, 61, 33, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.5;
+  filter: blur(20px);
+  animation: float 10s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.2); }
+  100% { transform: translate(40px, 10px) scale(1); }
+}
+
+/* Stars Background */
+.calendar-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  filter: blur(1px);
+  opacity: 0.5;
+  animation: twinkle var(--duration) infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
