@@ -137,9 +137,9 @@ export const fetchEvents = async (date?: string): Promise<AstronomicalEvent[]> =
     // If we have no events yet, add a default one
     if (events.length === 0) {
       events.push({
-        title: 'Exploring the Cosmos',
+        title: 'NASA Database Not Updated',
         date: format(currentDate, 'MMMM d'),
-        description: 'Every day offers a new opportunity to discover the wonders of our universe. Today, we invite you to explore the cosmos and reflect on humanity\'s ongoing journey to understand the stars.',
+        description: 'Astronomical event not yet update in NASA\'s database. Search for any other day from the calendar. Or wait till 1:30 PM',
         media: 'https://apod.nasa.gov/apod/image/2011/OrionNebula_HubbleSerrano_3000.jpg',
         type: 'default'
       });
